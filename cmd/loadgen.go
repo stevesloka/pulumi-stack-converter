@@ -31,24 +31,20 @@ to quickly create a Cobra application.`,
 	},
 }
 
-var loadgenStackName string
+var loadgenStackName, loadgenStackDirectory string
 
 func init() {
 	rootCmd.AddCommand(loadgenCmd)
 
 	// Here you will define your flags and configuration settings.
-
 	loadgenCmd.Flags().StringVar(&loadgenStackName, "stack-name", "dev", "Name of the stack to run against.")
+	convertCmd.Flags().StringVar(&loadgenStackDirectory, "stack-directory", "", "Location of the of the local stack.")
 }
 
 func loadgen(cmd *cobra.Command, args []string) {
 	ctx := context.Background()
 
-	workDir := "/Users/stevesloka/dev/kubernetes-go"
-
-	// create or select a stack from a local workspace with CLI program, using the ../fargate workDir.
-	// the Pulumi program, and any project or stack settings will be used by our stack.
-	s, err := auto.UpsertStackLocalSource(ctx, loadgenStackName, workDir)
+	s, err := auto.UpsertStackLocalSource(ctx, loadgenStackName, loadgenStackDirectory)
 	if err != nil {
 		fmt.Printf("Failed to create or select stack: %v\n", err)
 		os.Exit(1)
