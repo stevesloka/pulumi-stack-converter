@@ -38,7 +38,10 @@ func init() {
 
 	// Here you will define your flags and configuration settings.
 	loadgenCmd.Flags().StringVar(&loadgenStackName, "stack-name", "dev", "Name of the stack to run against.")
-	convertCmd.Flags().StringVar(&loadgenStackDirectory, "stack-directory", "", "Location of the of the local stack.")
+	loadgenCmd.Flags().StringVar(&loadgenStackDirectory, "stack-directory", "", "Location of the of the local stack.")
+
+	loadgenCmd.MarkFlagRequired("stack-name")
+	loadgenCmd.MarkFlagRequired("stack-directory")
 }
 
 func loadgen(cmd *cobra.Command, args []string) {
